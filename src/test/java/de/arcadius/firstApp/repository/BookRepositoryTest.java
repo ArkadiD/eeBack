@@ -35,6 +35,7 @@ public class BookRepositoryTest {
 
     @Test
     public void create() throws Exception {
+        repository.countAll();
         assertEquals(Long.valueOf(0), repository.countAll());
         assertEquals(0, repository.findAll().size());
     }

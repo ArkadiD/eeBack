@@ -56,6 +56,7 @@ dependencies {
     compile('javax:javaee-web-api:8.0')
     compile('org.arquillian.universe:arquillian-junit:1.2.0.1')
     compile('io.swagger:swagger-annotations:1.5.21')
+    compile('org.hibernate:hibernate-core:5.3.7.Final')
 
     testCompile('junit:junit:4.12')
     testCompile('org.arquillian.universe:arquillian-junit:*')
@@ -70,11 +71,19 @@ test {
         exceptionFormat = 'full'
     }
 }
+
 task myWar(type: War) {
     setClasspath(getConfigurations().getByName('deployLib'))
     setDestinationDir(file('out/artifact'))
     setArchivesBaseName(war_name)
-
+    webInf {
+        into('classes') {
+            from sourceSets.main.java.outputDir
+            from sourceSets.main.resources.asFileTree.matching {
+                include("**/persistence.xml")
+            }
+        }
+    }
     metaInf {
         manifest {
             attributes 'version': war_version
@@ -83,41 +92,32 @@ task myWar(type: War) {
             attributes 'classifire': war_classifire
             attributes 'Class-Path': configurations.deployLib.files.collect { it.name }.join(' ')
         }
+        from sourceSets.main.resources.asFileTree.matching { include("import.sql") }
     }
-    webInf {
-        into('classes') {
-            from sourceSets.main.java.outputDir
-        }
-        into('classes/META-INF') {
-            from file(sourceSets.main.resources.find { 'persistence.xml' })
-        }
 
-    }
-}
 
-swagger {
-    apiSource {
-        sprin.
-                gmvc = false
-        locations = ['de.arcadius.firstApp.rest']
-        schemes = ['http', 'https']
-        host = 'localhost:8080'
-        basePath = '/api'
-        outputFormats = ['json', 'yaml']
-        info {
-            title = "need some swag ?"
-            version = "1.0.0"
-            license {
-                name = 'Apache 2.0'
+    swagger {
+        apiSource {
+            springmvc = false
+            locations = ['de.arcadius.firstApp.rest']
+            schemes = ['http', 'https']
+            host = 'localhost:8080'
+            basePath = '/api'
+            outputFormats = ['json', 'yaml']
+            info {
+                title = "need some swag ?"
+                version = "1.0.0"
+                license {
+                    name = 'Apache 2.0'
+                }
             }
+            securityDefinition {
+                name = 'basicAuth'
+                type = 'basic'
+            }
+            outputPath = "src/main/webapp/document.html"
+            swaggerDirectory = "src/main/webapp"
+            attachSwaggerArtifact = true
         }
-        securityDefinition {
-            name = 'basicAuth'
-            type = 'basic'
-        }
-        outputPath = "src/main/webapp/document.html"
-        swaggerDirectory = "src/main/webapp"
-        attachSwaggerArtifact = true
     }
-}
-
+} 

@@ -29,7 +29,7 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
                 )
         ),
         host = "localhost:8080",
-        basePath = "/bookstore-back/api",
+        basePath = "/firstApp-1.0/api",
         schemes = {SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS},
         tags = {
                 @Tag(name = "Book", description = "Tag used to denote operations as private")
