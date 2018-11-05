@@ -14,6 +14,15 @@
         <class>de.arcadius.firstApp.model.Book</class>
 
         <properties>
+        	 <!-- Embedded mode -->
+           		 <!-- <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/> -->
+           		<!--  <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:EE7Lab08DB;create=true"/> -->
+            <!-- Client Server mode -->
+            	<!--<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>-->
+           		 <!--<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/EE7Lab08DB;create=true"/>-->
+           		 <!--<property name="javax.persistence.jdbc.user" value="APP"/>-->
+				<!--<property name="javax.persistence.jdbc.password" value="APP"/>-->
+
             <!--Dialect Hibernate Properties -->
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
@@ -22,7 +31,9 @@
             <property name="hibernate.show_sql" value="true"/>
 
             <!--Defines whether the persistence provider shall create the database, first drop and then recreate it,
-            only drop it or do nothing at all. If this property is not provided, no schema will be created.-->
+            only drop it or do nothing at all. If this property is not provided, no schema will be created.
+        	This can be set to create and it will create db staff on deploy.
+        	[none,create,drop-and-create,drop]-->
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <!--Defines which scripts the persistence provider shall create. A script target needs to be defined for each script to be created.-->
             <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
@@ -35,4 +46,6 @@
         </properties>
     </persistence-unit>
 </persistence>
+
+
 
