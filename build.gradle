@@ -79,12 +79,18 @@ task myWar(type: War) {
     webInf {
         into('classes') {
             from sourceSets.main.java.outputDir
-            from sourceSets.main.resources.asFileTree.matching {
-                include("**/persistence.xml")
+            into('META-INF') {
+                from(sourceSets.main.resources.files) {
+                    include("persistence.xml")
+                }
+
             }
         }
     }
     metaInf {
+        from(sourceSets.main.resources) {
+            include("import.sql")
+        }
         manifest {
             attributes 'version': war_version
             attributes 'description': war_description
@@ -92,7 +98,6 @@ task myWar(type: War) {
             attributes 'classifire': war_classifire
             attributes 'Class-Path': configurations.deployLib.files.collect { it.name }.join(' ')
         }
-        from sourceSets.main.resources.asFileTree.matching { include("import.sql") }
     }
 
 
@@ -120,4 +125,4 @@ task myWar(type: War) {
             attachSwaggerArtifact = true
         }
     }
-} 
+}
