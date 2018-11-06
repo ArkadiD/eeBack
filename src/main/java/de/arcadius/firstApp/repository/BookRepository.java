@@ -29,7 +29,7 @@ public class BookRepository {
     @Inject
     private NumberGenerator generator;
 
-    public Book find(@NotNull @Min(10) Long id) {
+    public Book find(@NotNull Long id) {
         return em.find(Book.class, id);
     }
 
@@ -42,7 +42,7 @@ public class BookRepository {
     }
 
     @Transactional(REQUIRED)
-    public void delete(@NotNull @Min(1) @Max(1000) Long id) {
+    public void delete(@NotNull  Long id) {
         em.remove(em.getReference(Book.class, id));
     }
 
