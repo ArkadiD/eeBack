@@ -16,7 +16,7 @@ import java.util.List;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
-
+//TODO response headers only for dev purposes. security issue. remove  for production
 @SwaggerDefinition(
         info = @Info(
                 title = "BookStore APIs",
@@ -68,14 +68,14 @@ public class BookEndpoint {
         Book book = bookRepository.find(id);
 
         if (book == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
 
-        return Response.ok(book).build();
+        return Response.ok(book).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @DELETE
     @Path("/{id : \\d+}")
-    @ApiOperation("Deletes a book given an id")
+    @ApiOperation("Deletes a book <given an id")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Book has been deleted"),
             @ApiResponse(code = 400, message = "Invalid input. Id cannot be lower than 1"),
@@ -83,7 +83,7 @@ public class BookEndpoint {
     })
     public Response deleteBook(@PathParam("id") @Min(1) Long id) {
         bookRepository.delete(id);
-        return Response.noContent().build();
+        return Response.noContent().allow("DELETE").build();
     }
 
     @GET
