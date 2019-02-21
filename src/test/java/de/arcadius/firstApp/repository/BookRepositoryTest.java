@@ -20,7 +20,6 @@ public class BookRepositoryTest {
     @Inject
     private BookRepository repository;
 
-
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
