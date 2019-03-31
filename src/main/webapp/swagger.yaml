@@ -100,7 +100,7 @@ paths:
     delete:
       tags:
       - "Book"
-      summary: "Deletes a book given an id"
+      summary: "Deletes a book <given an id"
       description: ""
       operationId: "deleteBook"
       parameters:
@@ -167,11 +167,13 @@ definitions:
         type: "string"
         description: "Language in which the book has been written"
         enum:
-        - "ENGLISCH"
+        - "ENGLISH"
         - "FRENCH"
-        - "SPANISCH"
+        - "SPANISH"
+        - "PORTUGUESE"
         - "ITALIAN"
         - "FINISH"
         - "GERMAN"
+        - "DEUTSCH"
         - "RUSSIAN"
     description: "Book resource representation"

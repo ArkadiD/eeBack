@@ -5,7 +5,7 @@
              version="2.1">
 
     <persistence-unit name="bookStorePU" transaction-type="JTA">
-        <description>H2 Testing Unit</description>
+        <description>mysql</description>
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
@@ -14,16 +14,16 @@
         <class>de.arcadius.firstApp.model.Book</class>
 
         <properties>
-        	 <!-- Embedded mode -->
+        <!-- Embedded mode -->
            		 <!-- <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/> -->
            		<!--  <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:EE7Lab08DB;create=true"/> -->
-            <!-- Client Server mode -->
+         <!-- Client Server mode -->
             	<!--<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>-->
            		 <!--<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/EE7Lab08DB;create=true"/>-->
            		 <!--<property name="javax.persistence.jdbc.user" value="APP"/>-->
 				<!--<property name="javax.persistence.jdbc.password" value="APP"/>-->
 
-            <!--Dialect Hibernate Properties -->
+         <!--Dialect Hibernate Properties -->
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.max_fetch_depth" value="3"/>

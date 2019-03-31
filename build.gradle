@@ -1,4 +1,5 @@
 plugins {
+    id 'java'
     id 'war'
     id 'com.benjaminsproule.swagger' version '1.0.0'
 }
@@ -9,16 +10,8 @@ repositories {
 
 dependencies {
     compile('javax:javaee-web-api:8.0')
-    compile('org.arquillian.universe:arquillian-junit:1.2.0.1')
     compile('io.swagger:swagger-annotations:1.5.21')
     compile('org.hibernate:hibernate-core:5.3.7.Final')
-
-    testCompile('junit:junit:4.12')
-    testCompile('org.arquillian.universe:arquillian-junit:*')
-    testCompile('org.jboss.arquillian.extension:arquillian-rest-client-api:1.0.0.Alpha4')
-    testCompile('org.jboss.arquillian.extension:arquillian-rest-client-impl-3x:1.0.0.Alpha4')
-    testCompile('org.jboss.shrinkwrap:shrinkwrap-api:1.2.6')
-    testCompile('org.wildfly.arquillian:wildfly-arquillian-container-remote:2.1.1.Final')
 }
 
 configurations {
@@ -37,6 +30,20 @@ this.setGroup('de.arcadius')
 this.setDescription('my first webb application')
 this.setVersion(war_version)
 this.defaultTasks('myWar')
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs(['src/main/java'])
+            setWebAppDirName('src/main/webapp')
+            setOutputDir(file('out/classes'))
+        }
+        resources {
+            setSrcDirs(['src/main/resources'])
+            output.resourcesDir = file('out/resources')
+        }
+    }
+}
 
 swagger {
     apiSource {
@@ -63,39 +70,9 @@ swagger {
     }
 }
 
-sourceSets {
-    main {
-        java {
-            setSrcDirs(['src/main/java'])
-            setWebAppDirName('src/main/webapp')
-            setOutputDir(file('out/classes'))
-        }
-        resources {
-            setSrcDirs(['src/main/resources'])
-            output.resourcesDir = file('out/resources')
-        }
-    }
-    test {
-        java {
-            setSrcDirs(['src/test/java'])
-            setOutputDir(file('out/test/classes'))
-        }
-        resources {
-            setSrcDirs(['src/test/resources'])
-            output.resourcesDir = file('out/test/resources')
-        }
-    }
-}
-
-test {
-    testLogging {
-        events 'passed', 'skipped', 'failed'
-        exceptionFormat = 'full'
-    }
-}
-
 
 task myWar(type: War) {
+    setGroup("arkadi")
     setClasspath(getConfigurations().getByName('deployLib'))
     setDestinationDir(file('out/artifact'))
     setArchivesBaseName(war_name)
@@ -124,7 +101,11 @@ task myWar(type: War) {
     }
 }
 
-
+// buildDir = projectDir/build
+task deploy(type: Copy) {
+    from project.tasks.getByName("myWar").archivePath
+    into "/Users/arkadi/Develop/Server/wildfly-14.0.1.Final/standalone/deployments"
+}
 
 task list() {
     doLast {
@@ -138,3 +119,6 @@ task list2() {
     }
 }
 
+
+deploy.mustRunAfter(myWar)
+deploy.dependsOn(myWar)

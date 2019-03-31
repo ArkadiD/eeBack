@@ -116,7 +116,7 @@
       },
       "delete" : {
         "tags" : [ "Book" ],
-        "summary" : "Deletes a book given an id",
+        "summary" : "Deletes a book <given an id",
         "description" : "",
         "operationId" : "deleteBook",
         "parameters" : [ {
@@ -198,7 +198,7 @@
         "language" : {
           "type" : "string",
           "description" : "Language in which the book has been written",
-          "enum" : [ "ENGLISCH", "FRENCH", "SPANISCH", "ITALIAN", "FINISH", "GERMAN", "RUSSIAN" ]
+          "enum" : [ "ENGLISH", "FRENCH", "SPANISH", "PORTUGUESE", "ITALIAN", "FINISH", "GERMAN", "DEUTSCH", "RUSSIAN" ]
         }
       },
       "description" : "Book resource representation"
